@@ -31,7 +31,7 @@ func genbytes(length int) []byte {
 		b = make([]byte, length)
 	}
 	for i := 0; i < length; i++ {
-		b[i] = byte(fastrandn(255))
+		b[i] = byte(fastrandn(256))
 	}
 	return b
 }
@@ -49,6 +49,7 @@ func main() {
 		klen     = flag.Int("key_len", 24, "key length")
 		vlen     = flag.Int("val_len", 24, "value length")
 		loadSize = flag.Int64("load_size", 1, "load testing size, GB")
+		fsync    = flag.Bool("fsync", false, "using fsync")
 		base     = flag.String("base_path", "./tmp", "base directory")
 
 		engines = []struct {
@@ -173,8 +174,8 @@ func main() {
 
 			return nil
 		}
-		if err := testing(false); err != nil {
-			fatalf("test %v fsync(%v) failed: %v", e.name, false, err)
+		if err := testing(*fsync); err != nil {
+			fatalf("test %v fsync(%v) failed: %v", e.name, *fsync, err)
 		}
 		cleanall()
 	}
