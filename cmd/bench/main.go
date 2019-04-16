@@ -76,6 +76,7 @@ func main() {
 
 	for _, e := range engines {
 		datapath := filepath.Join(*base, e.name)
+		os.RemoveAll(datapath)
 		testing := func(fsync bool) error {
 			engine, err := e.factory(datapath, fsync)
 			if err != nil {
@@ -162,6 +163,7 @@ func main() {
 				remaining -= int64(len(val))
 				return true
 			})
+			begin3 = time.Now()
 
 			fmt.Printf("%v fsync(%v) foreach testing:\n",
 				e.name, fsync)
@@ -174,7 +176,6 @@ func main() {
 		if err := testing(false); err != nil {
 			fatalf("test %v fsync(%v) failed: %v", e.name, false, err)
 		}
-		os.RemoveAll(datapath)
 		cleanall()
 	}
 }

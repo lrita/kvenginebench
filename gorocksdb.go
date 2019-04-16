@@ -14,6 +14,7 @@ type gorocksdb struct {
 func NewRocksDB(path string, fsync bool) (Engine, error) {
 	o := rocksdb.NewDefaultOptions()
 	o.SetDbWriteBufferSize(256 * 1024 * 1024)
+	o.SetCreateIfMissing(true)
 	db, err := rocksdb.OpenDb(o, "benchmark")
 	if err != nil {
 		return nil, errors.Trace(err)

@@ -17,6 +17,7 @@ func NewBadgerDB(path string, fsync bool) (Engine, error) {
 	o.NumLevelZeroTables = 8
 	o.NumLevelZeroTablesStall = 16
 	o.SyncWrites = fsync
+	o.Logger = nil
 
 	db, err := badger.Open(o)
 	if err != nil {
