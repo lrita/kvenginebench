@@ -15,7 +15,7 @@ func NewRocksDB(path string, fsync bool) (Engine, error) {
 	o := rocksdb.NewDefaultOptions()
 	o.SetDbWriteBufferSize(256 * 1024 * 1024)
 	o.SetCreateIfMissing(true)
-	db, err := rocksdb.OpenDb(o, "benchmark")
+	db, err := rocksdb.OpenDb(o, path)
 	if err != nil {
 		return nil, errors.Trace(err)
 	}
