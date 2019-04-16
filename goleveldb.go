@@ -15,10 +15,11 @@ func NewGoLevelDB(path string, fsync bool) (Engine, error) {
 	o := &opt.Options{
 		BlockCacheCapacity:     64 * opt.MiB,
 		BlockSize:              opt.MiB,
-		CompactionL0Trigger:    8,
+		CompactionL0Trigger:    4,
 		WriteL0SlowdownTrigger: 16,
 		WriteL0PauseTrigger:    24,
-		CompactionTotalSize:    64 * opt.MiB,
+		CompactionTableSize:    64 * opt.MiB,
+		CompactionTotalSize:    320 * opt.MiB,
 		WriteBuffer:            128 * opt.MiB,
 	}
 	db, err := leveldb.OpenFile(path, o)
